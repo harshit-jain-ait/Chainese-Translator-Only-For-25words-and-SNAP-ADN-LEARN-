@@ -66,3 +66,4 @@ This update introduces a full-page Japanese/Chinese cherry-blossom landscape bac
 - **Dev Servers**:
   - Backend: Uvicorn running on `http://127.0.0.1:8000` with active OWLv2 model on Apple Silicon (`mps`).
   - Frontend: Vite dev server running on `http://127.0.0.1:5173`.
+
