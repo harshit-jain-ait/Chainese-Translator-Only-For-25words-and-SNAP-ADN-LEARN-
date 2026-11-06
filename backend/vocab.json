@@ -1,0 +1,227 @@
+[
+  {
+    "id": 1,
+    "en": "Book",
+    "hanzi": "书",
+    "pinyin": "shū",
+    "measure": "本 (běn)",
+    "detect_as": "book",
+    "queries": ["book", "hardcover book", "reading book with pages"]
+  },
+  {
+    "id": 2,
+    "en": "Pen / Pencil",
+    "hanzi": "笔",
+    "pinyin": "bǐ",
+    "measure": "支 (zhī)",
+    "detect_as": "pen",
+    "queries": ["pen", "ballpoint pen", "writing pencil"]
+  },
+  {
+    "id": 3,
+    "en": "Paper",
+    "hanzi": "纸",
+    "pinyin": "zhǐ",
+    "measure": "张 (zhāng)",
+    "detect_as": "paper",
+    "queries": ["paper", "sheet of white paper", "printed document paper"]
+  },
+  {
+    "id": 4,
+    "en": "Notebook",
+    "hanzi": "本子",
+    "pinyin": "běnzi",
+    "measure": "本 / 个 (běn / gè)",
+    "detect_as": "notebook",
+    "queries": ["notebook", "spiral notebook", "lined paper notebook"]
+  },
+  {
+    "id": 5,
+    "en": "Backpack / Schoolbag",
+    "hanzi": "书包",
+    "pinyin": "shūbāo",
+    "measure": "个 (gè)",
+    "detect_as": "backpack",
+    "queries": ["backpack", "schoolbag", "backpack with shoulder straps"]
+  },
+  {
+    "id": 6,
+    "en": "Mobile Phone",
+    "hanzi": "手机",
+    "pinyin": "shǒujī",
+    "measure": "部 / 个 (bù / gè)",
+    "detect_as": "mobile phone",
+    "queries": ["mobile phone", "smartphone with screen", "cell phone"]
+  },
+  {
+    "id": 7,
+    "en": "Computer",
+    "hanzi": "电脑",
+    "pinyin": "diànnǎo",
+    "measure": "台 (tái)",
+    "detect_as": "laptop",
+    "queries": ["laptop", "laptop computer", "computer keyboard and monitor"]
+  },
+  {
+    "id": 8,
+    "en": "Key",
+    "hanzi": "钥匙",
+    "pinyin": "yàoshi",
+    "measure": "把 (bǎ)",
+    "detect_as": "key",
+    "queries": ["key", "metal house key", "silver key on a keyring"]
+  },
+  {
+    "id": 9,
+    "en": "Wallet",
+    "hanzi": "钱包",
+    "pinyin": "qiánbāo",
+    "measure": "个 (gè)",
+    "detect_as": "wallet",
+    "queries": ["wallet", "leather pocket wallet", "folding card wallet"]
+  },
+  {
+    "id": 10,
+    "en": "Wristwatch",
+    "hanzi": "手表",
+    "pinyin": "shǒubiǎo",
+    "measure": "块 (kuài)",
+    "detect_as": "wristwatch",
+    "queries": ["wristwatch", "wrist watch with a metal band", "watch on a wrist"]
+  },
+  {
+    "id": 11,
+    "en": "Glasses",
+    "hanzi": "眼镜",
+    "pinyin": "yǎnjìng",
+    "measure": "副 (fù)",
+    "detect_as": "eyeglasses",
+    "queries": ["eyeglasses", "pair of glasses with thin frames", "spectacles"]
+  },
+  {
+    "id": 12,
+    "en": "Umbrella",
+    "hanzi": "雨伞",
+    "pinyin": "yǔsǎn",
+    "measure": "把 (bǎ)",
+    "detect_as": "umbrella",
+    "queries": ["umbrella", "folded rain umbrella", "opened canopy umbrella"]
+  },
+  {
+    "id": 13,
+    "en": "Table / Desk",
+    "hanzi": "桌子",
+    "pinyin": "zhuōzi",
+    "measure": "张 (zhāng)",
+    "detect_as": "table",
+    "queries": ["table", "wooden dining table", "office work desk"]
+  },
+  {
+    "id": 14,
+    "en": "Chair",
+    "hanzi": "椅子",
+    "pinyin": "yǐzi",
+    "measure": "把 (bǎ)",
+    "detect_as": "chair",
+    "queries": ["chair", "wooden dining chair", "office desk chair"]
+  },
+  {
+    "id": 15,
+    "en": "Bed",
+    "hanzi": "床",
+    "pinyin": "chuáng",
+    "measure": "张 (zhāng)",
+    "detect_as": "bed",
+    "queries": ["bed", "sleeping bed with mattress", "bedroom bed with pillows"]
+  },
+  {
+    "id": 16,
+    "en": "Door",
+    "hanzi": "门",
+    "pinyin": "mén",
+    "measure": "扇 (shàn)",
+    "detect_as": "door",
+    "queries": ["door", "closed wooden room door", "interior entrance door"]
+  },
+  {
+    "id": 17,
+    "en": "Window",
+    "hanzi": "窗户",
+    "pinyin": "chuānghu",
+    "measure": "扇 (shàn)",
+    "detect_as": "window",
+    "queries": ["window", "glass window pane", "window with frame"]
+  },
+  {
+    "id": 18,
+    "en": "Mirror",
+    "hanzi": "镜子",
+    "pinyin": "jìngzi",
+    "measure": "面 (miàn)",
+    "detect_as": "mirror",
+    "queries": ["mirror", "wall mirror", "reflective vanity mirror"]
+  },
+  {
+    "id": 19,
+    "en": "Television",
+    "hanzi": "电视",
+    "pinyin": "diànshì",
+    "measure": "台 (tái)",
+    "detect_as": "television",
+    "queries": ["television", "flat screen TV", "television monitor display"]
+  },
+  {
+    "id": 20,
+    "en": "Cup / Mug",
+    "hanzi": "杯子",
+    "pinyin": "bēizi",
+    "measure": "个 (gè)",
+    "detect_as": "cup",
+    "queries": ["cup", "ceramic coffee mug", "drinking tea cup"]
+  },
+  {
+    "id": 21,
+    "en": "Bowl",
+    "hanzi": "碗",
+    "pinyin": "wǎn",
+    "measure": "个 / 只 (gè / zhī)",
+    "detect_as": "bowl",
+    "queries": ["bowl", "ceramic soup bowl", "round food bowl"]
+  },
+  {
+    "id": 22,
+    "en": "Plate",
+    "hanzi": "盘子",
+    "pinyin": "pánzi",
+    "measure": "个 (gè)",
+    "detect_as": "plate",
+    "queries": ["plate", "ceramic dinner plate", "shallow round dish"]
+  },
+  {
+    "id": 23,
+    "en": "Chopsticks",
+    "hanzi": "筷子",
+    "pinyin": "kuàizi",
+    "measure": "双 (shuāng)",
+    "detect_as": "chopsticks",
+    "queries": ["chopsticks", "pair of wooden chopsticks", "two thin sticks"]
+  },
+  {
+    "id": 24,
+    "en": "Spoon",
+    "hanzi": "勺子",
+    "pinyin": "sháozi",
+    "measure": "把 (bǎ)",
+    "detect_as": "spoon",
+    "queries": ["spoon", "metal soup spoon", "eating spoon"]
+  },
+  {
+    "id": 25,
+    "en": "Bottle",
+    "hanzi": "瓶子",
+    "pinyin": "píngzi",
+    "measure": "个 (gè)",
+    "detect_as": "bottle",
+    "queries": ["bottle", "water bottle", "plastic glass drink bottle"]
+  }
+]
