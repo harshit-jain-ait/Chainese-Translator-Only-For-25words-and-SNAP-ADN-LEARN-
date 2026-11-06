@@ -70,3 +70,4 @@ This update decouples the frontend and backend architectures:
 - **Backend Tests**: 35 passed (`pytest backend/tests`).
 - **Frontend Tests**: 45 passed (`vitest run`).
 - **Frontend Build**: `tsc && vite build` completed with 0 errors.
+

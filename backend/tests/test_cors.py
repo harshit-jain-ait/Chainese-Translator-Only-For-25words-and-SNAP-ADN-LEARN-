@@ -22,3 +22,4 @@ def test_cors_origins_parsing_custom_list():
         "https://preview.vercel.app",
         "https://custom-domain.com",
     ]
+

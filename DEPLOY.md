@@ -66,3 +66,4 @@ Vercel builds and hosts the React + Vite frontend directly from the repository.
   - The first time the container starts, Hugging Face downloads the OWLv2 model weights into `/app/.cache/huggingface`. Subsequent requests will be fast.
 - **Camera Access (HTTPS)**:
   - Browser camera APIs require a secure context (`HTTPS` or `localhost`). Both Vercel and Render provide automated SSL/TLS certificates out of the box.
+
