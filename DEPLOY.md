@@ -39,13 +39,13 @@ Vercel builds and hosts the React + Vite frontend directly from the repository.
 2. Import your GitHub repository.
 3. Configure project settings:
    - **Framework Preset**: Vite
-   - **Root Directory**: Leave empty (`./`) — [`vercel.json`](./vercel.json) handles the frontend build and SPA routing automatically.
+   - **Root Directory**: Click "Edit" and select **`frontend`** (Recommended — isolates the frontend and prevents Vercel from inspecting the backend directory). If left as `./`, the root `vercel.json` and `.vercelignore` will route the build to `frontend`.
 4. Configure **Environment Variables**:
    - **Name**: `VITE_API_BASE`
    - **Value**: Your Render backend URL, e.g. `https://chinese-detector-backend.onrender.com` (no trailing slash).
 5. Click **Deploy**.
-   - Vercel installs frontend dependencies and generates static assets into `frontend/dist`.
-   - The `.vercelignore` ensures Vercel ignores `backend/` and never attempts to build Python serverless functions.
+   - Vercel installs frontend dependencies and generates static assets into `dist`.
+   - The SPA rewrite in `vercel.json` routes all client-side navigation to `/index.html`.
 
 ---
 
