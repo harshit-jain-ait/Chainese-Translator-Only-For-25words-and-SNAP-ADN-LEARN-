@@ -120,8 +120,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header className="sticky top-4 z-50 w-full px-4 sm:px-6 lg:px-8 mt-4 flex justify-center">
-      <nav aria-label="Main" className="w-full max-w-5xl mx-auto">
-        <div className="w-full min-h-[64px] h-16 py-2 px-3 sm:px-4 flex items-center justify-between rounded-full bg-white dark:bg-[#24231F] border border-[#E5E7EB] dark:border-[#3A3934] shadow-[0_4px_20px_-2px_rgba(0,0,0,0.06),0_2px_6px_-1px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_20px_-2px_rgba(0,0,0,0.4)] transition-colors">
+      <nav aria-label="Main" className="w-full max-w-[1100px] mx-auto">
+        <div className="w-full min-h-[64px] h-16 py-2 px-3 sm:px-4 flex items-center justify-between rounded-full bg-white/90 dark:bg-[#1C1B19]/90 backdrop-blur-[12px] border border-white/60 dark:border-[#3A3934] shadow-[0_4px_20px_-2px_rgba(0,0,0,0.06),0_2px_6px_-1px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_20px_-2px_rgba(0,0,0,0.4)] transition-colors">
           {/* Left Group: Logo, Divider, Title */}
           <div className="flex items-center gap-3 sm:gap-4 shrink-0">
             {/* 1. Logo tile: 48px rounded square with gradient & viewfinder brackets */}

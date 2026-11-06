@@ -45,7 +45,6 @@ export function App() {
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (doc.startViewTransition && !isReducedMotion) {
-      // Calculate origin point (click position or top-right corner)
       const x = e ? e.clientX : window.innerWidth - 30;
       const y = e ? e.clientY : 30;
       const endRadius = Math.hypot(
@@ -150,9 +149,11 @@ export function App() {
           health.error || 'Model is currently initializing or unavailable on the server.'
         );
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setIsModelReady(false);
-      setBackendError(err.message || 'Cannot reach detector backend.');
+      setBackendError(
+        err instanceof Error ? err.message : 'Cannot reach detector backend.'
+      );
     } finally {
       setIsRetryingHealth(false);
     }
@@ -187,11 +188,11 @@ export function App() {
   }, [checkHealth, loadVocabulary]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8F9FA] dark:bg-[#121316] transition-colors duration-200">
+    <div className="min-h-screen flex flex-col relative z-10 transition-colors duration-200 pb-8 sm:pb-12">
       {/* Toast Notifications */}
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
 
-      {/* Top Floating Navbar */}
+      {/* 1. Top Floating Navbar */}
       <Navbar
         theme={theme}
         onToggleTheme={toggleTheme}
@@ -206,59 +207,65 @@ export function App() {
         isRetrying={isRetryingHealth}
       />
 
-      {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-5 lg:p-6 flex flex-col gap-4 sm:gap-5">
-        {/* 2-Column Responsive Grid: 7 cols stage, 5 cols results on lg screens */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-          {/* Left Column: Stage & Controls */}
-          <div className="lg:col-span-7 flex flex-col gap-3">
-            <StagePanel
-              imageSrc={imageSrc}
-              videoRef={videoRef}
-              isCameraActive={isCameraActive}
-              isDetecting={isDetecting}
-              detections={detections}
-              imageDimensions={imageDimensions}
-              selectedVocabId={selectedVocabId}
-              onSelectDetection={setSelectedVocabId}
-              onStartCamera={startCamera}
-              onUploadClick={() => document.getElementById('photo-file-input')?.click()}
-              cameraError={cameraError}
-            />
+      {/* Main Content Area */}
+      <main className="w-full max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 mt-5 flex flex-col gap-5">
+        {/* 2. Main App Panel: Single centered white glass card */}
+        <div className="w-full bg-white/85 dark:bg-[#1C1B19]/85 backdrop-blur-[12px] rounded-[24px] border border-white/60 dark:border-[#3A3934]/80 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.08),0_8px_16px_-6px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] p-5 sm:p-6 transition-colors">
+          {/* Inside Panel: 2-column responsive grid on lg (60% stage, 40% results, 20px gap) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+            {/* Left: Camera Stage */}
+            <div className="lg:col-span-7 flex flex-col">
+              <StagePanel
+                imageSrc={imageSrc}
+                videoRef={videoRef}
+                isCameraActive={isCameraActive}
+                isDetecting={isDetecting}
+                detections={detections}
+                imageDimensions={imageDimensions}
+                selectedVocabId={selectedVocabId}
+                onSelectDetection={setSelectedVocabId}
+                onStartCamera={startCamera}
+                onUploadClick={() => document.getElementById('photo-file-input')?.click()}
+                cameraError={cameraError}
+              />
+            </div>
 
-            <Controls
-              isCameraActive={isCameraActive}
-              onToggleCamera={isCameraActive ? stopCamera : startCamera}
-              onFlipCamera={flipCamera}
-              onCaptureAndDetect={captureAndDetect}
-              onFileUpload={handleFileUpload}
-              isLiveActive={isLiveActive}
-              onToggleLive={toggleLive}
-              isDetecting={isDetecting}
-              detectionCount={uniqueDetections.length}
-              statusMessage={statusMessage}
-              threshold={threshold}
-              onThresholdChange={setThreshold}
-              hasMedia={isCameraActive || !!imageSrc}
-              isModelReady={isModelReady}
-            />
+            {/* Right: Results Column */}
+            <div className="lg:col-span-5 flex flex-col min-h-[380px] lg:min-h-[480px]">
+              <ResultsGrid
+                detections={uniqueDetections}
+                selectedVocabId={selectedVocabId}
+                onSelectDetection={setSelectedVocabId}
+                status={status}
+                threshold={threshold}
+                onError={(msg) => addToast('error', msg)}
+              />
+            </div>
           </div>
+        </div>
 
-          {/* Right Column: Results Grid */}
-          <div className="lg:col-span-5 bg-transparent lg:min-h-[520px] flex flex-col">
-            <ResultsGrid
-              detections={uniqueDetections}
-              selectedVocabId={selectedVocabId}
-              onSelectDetection={setSelectedVocabId}
-              status={status}
-              threshold={threshold}
-              onError={(msg) => addToast('error', msg)}
-            />
-          </div>
+        {/* 6. Controls Bar: A separate white glass bar directly below panel, aligned to stage column width on desktop */}
+        <div className="w-full lg:w-[calc((100%-20px)*7/12)]">
+          <Controls
+            isCameraActive={isCameraActive}
+            onToggleCamera={isCameraActive ? stopCamera : startCamera}
+            onFlipCamera={flipCamera}
+            onCaptureAndDetect={captureAndDetect}
+            onFileUpload={handleFileUpload}
+            isLiveActive={isLiveActive}
+            onToggleLive={toggleLive}
+            isDetecting={isDetecting}
+            detectionCount={uniqueDetections.length}
+            statusMessage={statusMessage}
+            threshold={threshold}
+            onThresholdChange={setThreshold}
+            hasMedia={isCameraActive || !!imageSrc}
+            isModelReady={isModelReady}
+          />
         </div>
       </main>
 
-      {/* Vocabulary Section & Modal (Show all 25 words) */}
+      {/* Vocabulary Modal Section */}
       <section id="vocab-section" aria-label="Vocabulary section">
         <VocabModal
           open={isVocabModalOpen}

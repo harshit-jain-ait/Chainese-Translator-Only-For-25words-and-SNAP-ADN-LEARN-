@@ -4,8 +4,46 @@
 
 @layer base {
   body {
-    @apply font-sans text-gray-900 dark:text-gray-100 bg-[#F8F9FA] dark:bg-[#121316];
+    @apply font-sans text-[#1D1D1B] dark:text-[#F2F1EC];
+    background-color: #FBF3F1;
+    background-image: url("/assets/cherry-blossom-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    position: relative;
+    min-height: 100vh;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Fixed pseudo-element overlay for light mode */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.15));
+    transition: background 0.3s ease;
+  }
+
+  /* Dark mode muted overlay */
+  .dark body::before,
+  html.dark body::before {
+    background: linear-gradient(rgba(15, 15, 18, 0.78), rgba(15, 15, 18, 0.88));
+  }
+
+  /* Mobile: iOS background-attachment fix */
+  @media (max-width: 768px) {
+    body {
+      background-attachment: scroll;
+    }
+  }
+
+  #root {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
   }
 }
 
@@ -54,4 +92,16 @@ main {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(156, 163, 175, 0.6);
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

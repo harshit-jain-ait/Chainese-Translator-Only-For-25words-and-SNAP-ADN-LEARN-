@@ -50,4 +50,13 @@ if (typeof window !== 'undefined') {
       })),
     });
   }
+
+  if (!window.ResizeObserver) {
+    class MockResizeObserver {
+      observe = vi.fn();
+      unobserve = vi.fn();
+      disconnect = vi.fn();
+    }
+    window.ResizeObserver = MockResizeObserver as unknown as typeof ResizeObserver;
+  }
 }

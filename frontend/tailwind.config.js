@@ -8,6 +8,12 @@ export default {
   theme: {
     extend: {
       colors: {
+        accent: {
+          light: '#E5674F',
+          deep: '#C0392B',
+        },
+        apptext: '#1D1D1B',
+        appmuted: '#6B6B66',
         terracotta: {
           50: '#FDF6F4',
           100: '#FCECE8',
