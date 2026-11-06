@@ -15,7 +15,7 @@ def test_cors_origins_defaults_when_empty_string():
 
 
 def test_cors_origins_parsing_custom_list():
-    raw_env = "https://my-app.vercel.app, https://preview.vercel.app , https://custom-domain.com"
+    raw_env = "https://my-app.vercel.app/, https://preview.vercel.app/ , https://custom-domain.com"
     origins = get_cors_origins(raw_env)
     assert origins == [
         "https://my-app.vercel.app",

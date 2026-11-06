@@ -14,10 +14,12 @@ export class DetectorApiError extends Error implements ApiError {
 
 /**
  * Resolves an API path against import.meta.env.VITE_API_BASE.
- * Strips trailing slashes from the base and falls back to relative paths when unset.
+ * Strips trailing slashes and trailing /api from the base and falls back to relative paths when unset.
  */
 export function getApiUrl(path: string): string {
-  const base = (import.meta.env.VITE_API_BASE || '').trim().replace(/\/+$/, '');
+  let base = (import.meta.env.VITE_API_BASE || '').trim().replace(/\/+$/, '');
+  // Normalize base if configured with trailing /api
+  base = base.replace(/\/api$/, '');
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
   return base ? `${base}${cleanPath}` : cleanPath;
 }
@@ -84,6 +86,18 @@ export async function getHealth(signal?: AbortSignal): Promise<HealthResponse> {
       throw await parseErrorResponse(res);
     }
 
+    const contentType = res.headers?.get ? (res.headers.get('content-type') || '') : '';
+    if (contentType.includes('text/html')) {
+      console.error(
+        '[API] Received HTML response instead of JSON from /api/health. Ensure VITE_API_BASE points to your backend.'
+      );
+      throw new DetectorApiError(
+        'Cannot connect to backend server. Please verify the service is running.',
+        'NETWORK_ERROR',
+        res.status
+      );
+    }
+
     return (await res.json()) as HealthResponse;
   } catch (err: any) {
     if (err.name === 'AbortError') {
@@ -109,6 +123,18 @@ export async function getVocab(signal?: AbortSignal): Promise<VocabItem[]> {
 
     if (!res.ok) {
       throw await parseErrorResponse(res);
+    }
+
+    const contentType = res.headers?.get ? (res.headers.get('content-type') || '') : '';
+    if (contentType.includes('text/html')) {
+      console.error(
+        '[API] Received HTML response instead of JSON from /api/vocab. Ensure VITE_API_BASE points to your backend.'
+      );
+      throw new DetectorApiError(
+        'Failed to load vocabulary list from server.',
+        'NETWORK_ERROR',
+        res.status
+      );
     }
 
     return (await res.json()) as VocabItem[];
@@ -144,6 +170,18 @@ export async function detectObjects(
 
     if (!res.ok) {
       throw await parseErrorResponse(res);
+    }
+
+    const contentType = res.headers?.get ? (res.headers.get('content-type') || '') : '';
+    if (contentType.includes('text/html')) {
+      console.error(
+        '[API] Received HTML response instead of JSON from /api/detect. Ensure VITE_API_BASE points to your backend.'
+      );
+      throw new DetectorApiError(
+        'Network connection failed during detection request.',
+        'NETWORK_ERROR',
+        res.status
+      );
     }
 
     return (await res.json()) as DetectResponse;

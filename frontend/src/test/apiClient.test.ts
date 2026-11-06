@@ -143,6 +143,30 @@ describe('API Client & Error Mapping', () => {
     vi.stubEnv('VITE_API_BASE', 'https://api.example.com');
     expect(getApiUrl('/api/speak?text=book')).toBe('https://api.example.com/api/speak?text=book');
 
+    // 4. When set with trailing /api or /api/ -> normalizes to avoid /api/api
+    vi.stubEnv('VITE_API_BASE', 'https://chinese-backend.onrender.com/api/');
+    expect(getApiUrl('/api/health')).toBe('https://chinese-backend.onrender.com/api/health');
+
     vi.unstubAllEnvs();
+  });
+
+  it('rejects when endpoint returns HTML instead of JSON', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        headers: new Headers({ 'content-type': 'text/html; charset=utf-8' }),
+        text: async () => '<!doctype html><html><body>Error</body></html>',
+      } as Response)
+    );
+
+    await expect(getHealth()).rejects.toThrow(DetectorApiError);
+    try {
+      await getHealth();
+    } catch (err: any) {
+      expect(err.code).toBe('NETWORK_ERROR');
+      expect(err.message).toBe('Cannot connect to backend server. Please verify the service is running.');
+    }
   });
 });

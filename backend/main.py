@@ -1,3 +1,4 @@
+import asyncio
 import io
 import logging
 import os
@@ -54,19 +55,25 @@ def get_cors_origins(cors_env: Optional[str] = None) -> list[str]:
     raw = cors_env if cors_env is not None else os.getenv("CORS_ORIGINS", "")
     if not raw or not raw.strip():
         return ["http://localhost:5173", "http://127.0.0.1:5173"]
-    origins = [orig.strip() for orig in raw.split(",") if orig.strip()]
+    origins = [orig.strip().rstrip("/") for orig in raw.split(",") if orig.strip()]
     return origins if origins else ["http://localhost:5173", "http://127.0.0.1:5173"]
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    logger.info("Initializing Chinese Object Vocabulary Detector API...")
+def _safe_load_model():
+    """Background helper to preload OWLv2 weights without blocking API startup."""
     try:
         detector.load_model()
     except Exception as e:
         logger.warning(
             f"Model not immediately preloaded at startup (will lazy-load on first detect request): {e}"
         )
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logger.info("Initializing Chinese Object Vocabulary Detector API...")
+    # Preload model in background thread so /api/health responds immediately
+    asyncio.create_task(asyncio.to_thread(_safe_load_model))
     yield
     logger.info("Shutting down Chinese Object Vocabulary Detector API...")
 
