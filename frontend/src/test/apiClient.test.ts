@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { getHealth, getVocab, detectObjects, DetectorApiError } from '../api/client';
+import { getHealth, getVocab, detectObjects, DetectorApiError, getApiUrl } from '../api/client';
 
 describe('API Client & Error Mapping', () => {
   beforeEach(() => {
@@ -126,5 +126,23 @@ describe('API Client & Error Mapping', () => {
     expect(health.status).toBe('ok');
     expect(health.model_loaded).toBe(true);
     expect(health.vocab_count).toBe(25);
+  });
+
+  it('uses VITE_API_BASE when set and relative paths when empty', () => {
+    // 1. When unset or empty string -> returns relative path
+    vi.stubEnv('VITE_API_BASE', '');
+    expect(getApiUrl('/api/health')).toBe('/api/health');
+    expect(getApiUrl('api/vocab')).toBe('/api/vocab');
+
+    // 2. When set with trailing slash -> strips trailing slash and prepends base URL
+    vi.stubEnv('VITE_API_BASE', 'https://chinese-backend.onrender.com/');
+    expect(getApiUrl('/api/health')).toBe('https://chinese-backend.onrender.com/api/health');
+    expect(getApiUrl('api/detect')).toBe('https://chinese-backend.onrender.com/api/detect');
+
+    // 3. When set without trailing slash
+    vi.stubEnv('VITE_API_BASE', 'https://api.example.com');
+    expect(getApiUrl('/api/speak?text=book')).toBe('https://api.example.com/api/speak?text=book');
+
+    vi.unstubAllEnvs();
   });
 });

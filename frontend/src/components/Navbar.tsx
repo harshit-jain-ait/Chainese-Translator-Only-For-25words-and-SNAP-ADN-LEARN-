@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { getApiUrl } from '../api/client';
 
 export type ModelHealthStatus = 'loading' | 'ready' | 'unavailable';
 
@@ -51,7 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const checkHealth = useCallback(async () => {
     try {
-      const res = await fetch('/api/health', {
+      const res = await fetch(getApiUrl('/api/health'), {
         headers: { Accept: 'application/json' },
       });
       if (!res.ok) {

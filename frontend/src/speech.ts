@@ -1,3 +1,5 @@
+import { getApiUrl } from './api/client';
+
 export class SpeechUnavailableError extends Error {
   constructor(message = 'Speech synthesis is not available on this device.') {
     super(message);
@@ -6,7 +8,7 @@ export class SpeechUnavailableError extends Error {
 }
 
 export function buildSpeakUrl(text: string): string {
-  return '/api/speak?text=' + encodeURIComponent(text);
+  return getApiUrl('/api/speak?text=' + encodeURIComponent(text));
 }
 
 let sharedAudio: HTMLAudioElement | null = null;

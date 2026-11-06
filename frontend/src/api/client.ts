@@ -12,6 +12,16 @@ export class DetectorApiError extends Error implements ApiError {
   }
 }
 
+/**
+ * Resolves an API path against import.meta.env.VITE_API_BASE.
+ * Strips trailing slashes from the base and falls back to relative paths when unset.
+ */
+export function getApiUrl(path: string): string {
+  const base = (import.meta.env.VITE_API_BASE || '').trim().replace(/\/+$/, '');
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return base ? `${base}${cleanPath}` : cleanPath;
+}
+
 async function parseErrorResponse(response: Response): Promise<DetectorApiError> {
   const status = response.status;
   let code = 'HTTP_ERROR';
@@ -64,7 +74,7 @@ async function parseErrorResponse(response: Response): Promise<DetectorApiError>
 
 export async function getHealth(signal?: AbortSignal): Promise<HealthResponse> {
   try {
-    const res = await fetch('/api/health', {
+    const res = await fetch(getApiUrl('/api/health'), {
       method: 'GET',
       headers: { Accept: 'application/json' },
       signal,
@@ -91,7 +101,7 @@ export async function getHealth(signal?: AbortSignal): Promise<HealthResponse> {
 
 export async function getVocab(signal?: AbortSignal): Promise<VocabItem[]> {
   try {
-    const res = await fetch('/api/vocab', {
+    const res = await fetch(getApiUrl('/api/vocab'), {
       method: 'GET',
       headers: { Accept: 'application/json' },
       signal,
@@ -126,7 +136,7 @@ export async function detectObjects(
   formData.append('threshold', threshold.toString());
 
   try {
-    const res = await fetch('/api/detect', {
+    const res = await fetch(getApiUrl('/api/detect'), {
       method: 'POST',
       body: formData,
       signal,

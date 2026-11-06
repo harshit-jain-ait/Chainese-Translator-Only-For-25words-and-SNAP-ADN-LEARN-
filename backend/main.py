@@ -1,5 +1,6 @@
 import io
 import logging
+import os
 import sys
 from pathlib import Path
 from contextlib import asynccontextmanager
@@ -48,6 +49,15 @@ ALLOWED_MIME_TYPES = {
 detector = ChineseObjectDetector()
 
 
+def get_cors_origins(cors_env: Optional[str] = None) -> list[str]:
+    """Parse comma-separated allowed CORS origins from env or fallback to defaults."""
+    raw = cors_env if cors_env is not None else os.getenv("CORS_ORIGINS", "")
+    if not raw or not raw.strip():
+        return ["http://localhost:5173", "http://127.0.0.1:5173"]
+    origins = [orig.strip() for orig in raw.split(",") if orig.strip()]
+    return origins if origins else ["http://localhost:5173", "http://127.0.0.1:5173"]
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Initializing Chinese Object Vocabulary Detector API...")
@@ -71,7 +81,7 @@ app = FastAPI(
 # Enable CORS for frontend development and production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=get_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -83,9 +93,11 @@ async def health_check():
     """Return API health status, loaded device, vocabulary count, and TTS status."""
     voice = get_configured_voice()
     tts_status = "available" if voice in ALLOWED_VOICES else "unavailable"
+    model_status = "ready" if detector.is_loaded else "loading"
     return {
         "status": "ok",
         "model_loaded": detector.is_loaded,
+        "model_status": model_status,
         "device": detector.device,
         "vocab_count": len(detector.vocab),
         "tts": tts_status,
@@ -287,5 +299,6 @@ if frontend_dist.exists():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    port = int(os.getenv("PORT", "8000"))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
 
