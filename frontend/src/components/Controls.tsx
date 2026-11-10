@@ -6,6 +6,7 @@ import {
   Upload,
   RefreshCw,
 } from 'lucide-react';
+import { ResetButton } from './ResetButton';
 
 interface ControlsProps {
   isCameraActive: boolean;
@@ -22,6 +23,7 @@ interface ControlsProps {
   onThresholdChange?: (val: number) => void;
   hasMedia: boolean;
   isModelReady: boolean;
+  onReset?: () => void;
 }
 
 export const Controls: React.FC<ControlsProps> = ({
@@ -35,6 +37,7 @@ export const Controls: React.FC<ControlsProps> = ({
   isDetecting,
   hasMedia,
   isModelReady,
+  onReset,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [hasMultipleCameras, setHasMultipleCameras] = useState<boolean>(false);
@@ -165,44 +168,54 @@ export const Controls: React.FC<ControlsProps> = ({
           <span>Upload photo</span>
         </button>
 
-        {/* 5. Live Detect Switch (Pushed to right with margin-left: auto) */}
-        <div className="col-span-2 sm:col-span-auto sm:ml-auto flex items-center justify-between sm:justify-end gap-2.5 min-h-[44px] pl-2 pr-1">
-          <label
-            htmlFor="live-detect-switch"
-            className="text-xs sm:text-sm font-medium text-[#1D1D1B] dark:text-[#F2F1EC] cursor-pointer select-none"
-          >
-            Live detect
-          </label>
-          <button
-            id="live-detect-switch"
-            type="button"
-            role="switch"
-            aria-checked={isLiveActive}
-            disabled={!isCameraActive || !isModelReady}
-            onClick={onToggleLive}
-            title={
-              !isCameraActive
-                ? 'Start camera to enable live detection'
-                : !isModelReady
-                ? 'Model unavailable'
-                : 'Toggle real-time live detection'
-            }
-            className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5674F] ${
-              !isCameraActive || !isModelReady
-                ? 'bg-gray-200 dark:bg-gray-800 cursor-not-allowed opacity-60'
-                : isLiveActive
-                ? 'bg-[#E5674F]'
-                : 'bg-gray-300 dark:bg-gray-700'
-            }`}
-          >
-            <span className="sr-only">Toggle live detection</span>
-            <span
-              aria-hidden="true"
-              className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
-                isLiveActive ? 'translate-x-5' : 'translate-x-0'
+        {/* 5. Right Section: Reset Button placed directly ABOVE Live Detection Button */}
+        <div className="col-span-2 sm:col-span-auto sm:ml-auto flex flex-col items-center sm:items-end justify-center gap-2 pt-2 sm:pt-0 border-t border-gray-100 dark:border-gray-800/80 sm:border-0">
+          {/* Oriental Aesthetic Reset Button */}
+          {onReset && (
+            <div className="flex items-center justify-center sm:justify-end w-full">
+              <ResetButton onReset={onReset} disabled={isDetecting} />
+            </div>
+          )}
+
+          {/* Live Detect Switch */}
+          <div className="flex items-center justify-between sm:justify-end gap-2.5 min-h-[32px] sm:min-h-[36px] pl-2 pr-1 w-full sm:w-auto">
+            <label
+              htmlFor="live-detect-switch"
+              className="text-xs sm:text-sm font-medium text-[#1D1D1B] dark:text-[#F2F1EC] cursor-pointer select-none"
+            >
+              Live detect
+            </label>
+            <button
+              id="live-detect-switch"
+              type="button"
+              role="switch"
+              aria-checked={isLiveActive}
+              disabled={!isCameraActive || !isModelReady}
+              onClick={onToggleLive}
+              title={
+                !isCameraActive
+                  ? 'Start camera to enable live detection'
+                  : !isModelReady
+                  ? 'Model unavailable'
+                  : 'Toggle real-time live detection'
+              }
+              className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5674F] ${
+                !isCameraActive || !isModelReady
+                  ? 'bg-gray-200 dark:bg-gray-800 cursor-not-allowed opacity-60'
+                  : isLiveActive
+                  ? 'bg-[#E5674F]'
+                  : 'bg-gray-300 dark:bg-gray-700'
               }`}
-            />
-          </button>
+            >
+              <span className="sr-only">Toggle live detection</span>
+              <span
+                aria-hidden="true"
+                className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
+                  isLiveActive ? 'translate-x-5' : 'translate-x-0'
+                }`}
+              />
+            </button>
+          </div>
         </div>
       </div>
     </div>

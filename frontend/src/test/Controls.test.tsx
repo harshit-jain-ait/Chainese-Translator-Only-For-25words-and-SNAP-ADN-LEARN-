@@ -83,5 +83,35 @@ describe('Controls Component Accessibility & State', () => {
     const uploadBtn = screen.getByRole('button', { name: /Upload photo/i });
     expect(uploadBtn).toBeDisabled();
   });
+
+  it('renders the Reset button above the live detect switch and calls onReset when clicked', () => {
+    const onReset = vi.fn();
+    render(
+      <Controls
+        isCameraActive={true}
+        onToggleCamera={() => {}}
+        onFlipCamera={() => {}}
+        onCaptureAndDetect={() => {}}
+        onFileUpload={() => {}}
+        isLiveActive={false}
+        onToggleLive={() => {}}
+        isDetecting={false}
+        detectionCount={0}
+        statusMessage="Ready"
+        threshold={0.50}
+        onThresholdChange={() => {}}
+        hasMedia={true}
+        isModelReady={true}
+        onReset={onReset}
+      />
+    );
+
+    const resetBtn = screen.getByRole('button', { name: /Reset detection and camera/i });
+    expect(resetBtn).toBeInTheDocument();
+    expect(screen.getByText('Reset')).toBeInTheDocument();
+
+    fireEvent.click(resetBtn);
+    expect(onReset).toHaveBeenCalledTimes(1);
+  });
 });
 

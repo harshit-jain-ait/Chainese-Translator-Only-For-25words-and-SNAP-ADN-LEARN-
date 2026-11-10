@@ -67,6 +67,9 @@ describe('App Layout and Integration', () => {
     const liveDetectSwitch = screen.getByRole('switch', { name: /Live detect/i });
     expect(liveDetectSwitch).toBeInTheDocument();
 
+    const resetBtn = screen.getByRole('button', { name: /Reset detection and camera/i });
+    expect(resetBtn).toBeInTheDocument();
+
     // 2. Results column is rendered with its heading
     const resultsHeading = screen.getByRole('heading', { name: /Results/i, level: 2 });
     expect(resultsHeading).toBeInTheDocument();

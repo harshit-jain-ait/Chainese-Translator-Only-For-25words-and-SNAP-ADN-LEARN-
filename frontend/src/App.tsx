@@ -8,6 +8,7 @@ import { VocabModal } from './components/VocabModal';
 import { ToastContainer, ToastMessage } from './components/Toast';
 import { useDetector } from './hooks/useDetector';
 import { getHealth, getVocab } from './api/client';
+import { stopSpeech } from './speech';
 import { VocabItem } from './types';
 
 export function App() {
@@ -115,6 +116,7 @@ export function App() {
     flipCamera,
     handleFileUpload,
     captureAndDetect,
+    clearAll,
     status,
     isDetecting,
     detections,
@@ -134,6 +136,13 @@ export function App() {
   const [isRetryingHealth, setIsRetryingHealth] = useState<boolean>(false);
   const [cachedVocab, setCachedVocab] = useState<VocabItem[]>([]);
   const [isVocabModalOpen, setIsVocabModalOpen] = useState<boolean>(false);
+
+  // Reset all media, speech, and detections
+  const handleReset = useCallback(() => {
+    stopSpeech();
+    clearAll();
+    addToast('info', 'Detection stage and camera have been reset.', 'Reset');
+  }, [clearAll, addToast]);
 
   // Check health and preload vocabulary
   const checkHealth = useCallback(async () => {
@@ -261,6 +270,7 @@ export function App() {
             onThresholdChange={setThreshold}
             hasMedia={isCameraActive || !!imageSrc}
             isModelReady={isModelReady}
+            onReset={handleReset}
           />
         </div>
       </main>
