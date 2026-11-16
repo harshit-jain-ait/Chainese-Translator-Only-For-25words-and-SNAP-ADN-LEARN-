@@ -6,25 +6,13 @@ import edge_tts
 
 try:
     from backend.tts_config import (
-        DEFAULT_VOICE,
-        ALLOWED_VOICES,
         DEFAULT_RATE,
         DEFAULT_PITCH,
-        get_configured_voice,
-        get_configured_rate,
-        get_configured_pitch,
-        get_tts_settings,
     )
 except ImportError:
     from tts_config import (
-        DEFAULT_VOICE,
-        ALLOWED_VOICES,
         DEFAULT_RATE,
         DEFAULT_PITCH,
-        get_configured_voice,
-        get_configured_rate,
-        get_configured_pitch,
-        get_tts_settings,
     )
 
 logger = logging.getLogger("chinese_tts")

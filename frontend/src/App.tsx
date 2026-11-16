@@ -124,10 +124,8 @@ export function App() {
     selectedVocabId,
     setSelectedVocabId,
     threshold,
-    setThreshold,
     isLiveActive,
     toggleLive,
-    statusMessage,
   } = useDetector(addToast);
 
   // Backend Health & Vocab Cache
@@ -264,10 +262,6 @@ export function App() {
             isLiveActive={isLiveActive}
             onToggleLive={toggleLive}
             isDetecting={isDetecting}
-            detectionCount={uniqueDetections.length}
-            statusMessage={statusMessage}
-            threshold={threshold}
-            onThresholdChange={setThreshold}
             hasMedia={isCameraActive || !!imageSrc}
             isModelReady={isModelReady}
             onReset={handleReset}

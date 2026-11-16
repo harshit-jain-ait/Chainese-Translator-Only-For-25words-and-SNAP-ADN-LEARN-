@@ -39,17 +39,3 @@ export interface ApiError {
 }
 
 export type AppStatus = 'idle' | 'loading' | 'ready' | 'error' | 'empty';
-
-export interface RenderedDetection extends Detection {
-  displayBox: {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
-  labelPosition: {
-    x: number;
-    y: number;
-    isFlippedBelow: boolean;
-  };
-}

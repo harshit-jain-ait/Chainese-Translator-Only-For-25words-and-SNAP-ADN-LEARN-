@@ -16,10 +16,6 @@ describe('Controls Component Accessibility & State', () => {
         isLiveActive={false}
         onToggleLive={onToggleLive}
         isDetecting={false}
-        detectionCount={0}
-        statusMessage="Ready"
-        threshold={0.50}
-        onThresholdChange={() => {}}
         hasMedia={true}
         isModelReady={true}
       />
@@ -44,10 +40,6 @@ describe('Controls Component Accessibility & State', () => {
         isLiveActive={true}
         onToggleLive={onToggleLive}
         isDetecting={false}
-        detectionCount={2}
-        statusMessage="Live scanning"
-        threshold={0.50}
-        onThresholdChange={() => {}}
         hasMedia={true}
         isModelReady={true}
       />
@@ -67,10 +59,6 @@ describe('Controls Component Accessibility & State', () => {
         isLiveActive={false}
         onToggleLive={() => {}}
         isDetecting={false}
-        detectionCount={0}
-        statusMessage="Model unavailable"
-        threshold={0.50}
-        onThresholdChange={() => {}}
         hasMedia={false}
         isModelReady={false}
       />
@@ -96,10 +84,6 @@ describe('Controls Component Accessibility & State', () => {
         isLiveActive={false}
         onToggleLive={() => {}}
         isDetecting={false}
-        detectionCount={0}
-        statusMessage="Ready"
-        threshold={0.50}
-        onThresholdChange={() => {}}
         hasMedia={true}
         isModelReady={true}
         onReset={onReset}

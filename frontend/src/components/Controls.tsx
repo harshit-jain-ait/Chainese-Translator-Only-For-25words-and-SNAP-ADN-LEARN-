@@ -17,10 +17,6 @@ interface ControlsProps {
   isLiveActive: boolean;
   onToggleLive: () => void;
   isDetecting: boolean;
-  detectionCount?: number;
-  statusMessage?: string;
-  threshold?: number;
-  onThresholdChange?: (val: number) => void;
   hasMedia: boolean;
   isModelReady: boolean;
   onReset?: () => void;
