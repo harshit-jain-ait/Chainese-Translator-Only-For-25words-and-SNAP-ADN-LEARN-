@@ -94,6 +94,83 @@ main {
   background: rgba(156, 163, 175, 0.6);
 }
 
+/* Panda Mascot Keyframe Animations */
+@keyframes panda-bob {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes panda-blink {
+  0%, 94%, 100% {
+    transform: scaleY(1);
+  }
+  97% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes panda-tilt {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  35% {
+    transform: rotate(3deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+}
+
+@keyframes panda-wave {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-15deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.panda-bob {
+  animation: panda-bob 3s ease-in-out infinite;
+  will-change: transform;
+}
+
+.panda-head {
+  transform-origin: 100px 105px;
+  animation: panda-tilt 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.panda-eyes {
+  transform-origin: 100px 77px;
+  animation: panda-blink 4.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.panda-right-arm {
+  transform-origin: 138px 145px;
+  transition: transform 0.2s ease-out;
+  will-change: transform;
+}
+
+.group:hover .panda-right-arm,
+.panda-right-arm.panda-waving {
+  animation: panda-wave 0.8s ease-in-out;
+}
+
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -103,5 +180,15 @@ main {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .panda-bob,
+  .panda-head,
+  .panda-eyes,
+  .panda-right-arm,
+  .group:hover .panda-right-arm,
+  .panda-right-arm.panda-waving {
+    animation: none !important;
+    transform: none !important;
   }
 }

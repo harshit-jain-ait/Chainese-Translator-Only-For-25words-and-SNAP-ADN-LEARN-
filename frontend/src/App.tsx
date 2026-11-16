@@ -5,6 +5,7 @@ import { StagePanel } from './components/StagePanel';
 import { Controls } from './components/Controls';
 import { ResultsGrid } from './components/ResultsGrid';
 import { VocabModal } from './components/VocabModal';
+import { PandaMascot } from './components/PandaMascot';
 import { ToastContainer, ToastMessage } from './components/Toast';
 import { useDetector } from './hooks/useDetector';
 import { getHealth, getVocab } from './api/client';
@@ -282,6 +283,9 @@ export function App() {
           loadError={vocabLoadError}
         />
       </section>
+
+      {/* Animated Panda Mascot in Bottom-Left Corner */}
+      <PandaMascot />
     </div>
   );
 }
